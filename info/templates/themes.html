@@ -1,0 +1,71 @@
+{% extends 'home/base.html' %}
+{% block tailwind %}text-rose-500{% endblock tailwind %}
+{% block content %}
+<div class="flex mt-2 px-10">
+  <div class="relative">
+      <form method= 'post', action='{% url 'search' %}'>
+          {% csrf_token %}
+      <input type="text" name="search" id="post_search"  class="block border-2 p-2.5 w-full z-20 text-sm text-slate-900 bg-slate-100 rounded-lg " placeholder="Search..." required="">
+      <button type="submit" class="absolute top-0 right-0 p-2.5 text-sm font-medium text-slate-900">
+          <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+          
+      </button>
+  </form>
+  </div>
+</div>
+
+<section class="mb-4">
+    <div class="infinite-container grid max-w-screen-2xl lg:pl-10 md:pl-15 sm:pl-10 px-8 py-8 mx-auto lg:gap-6 xl:gap-100 lg:py-16 lg:grid-cols-4">
+        {% for blog in f_post %}
+        
+        <div class="infinite-item hover:scale-105 rounded-sm cursor-pointer mt-10">
+            <a href="{% url 'detailpage' blog.slug %}">
+                   <div class="w-full checker-bg flex items-center pt-0 drop-shadow-3xl rounded-t-sm overflow-hidden justify-center text-blue-500" > 
+                      <div class="lg:h-56 md:h-36 w-full object-cover object-center" >
+                        {% if blog.video %}
+                        <video class=" w-full h-56" loop="true" autoplay="autoplay" controls="false">
+                               <source src="/media/{{blog.video}}" type="video/mp4">
+                       </video>
+                      {% endif %}
+                      {% if blog.featured_img %}
+                      <img class=" w-full h-full p-0" src="/media/{{blog.featured_img}}" alt="">   
+                      {% endif %}                      </div>  
+                    </div>    
+                    <div>     
+                        <div class="flex items-center justify-between">       
+                           <h1 class="text-teal-600 font-medium">{{blog.title}}</h1>        
+                        </div>   
+                       
+                    </div>
+                </a>
+        </div>
+        
+        {% endfor %}
+    </div>
+  </section>
+  
+  {% if f_post.has_next %}
+  <a href="?page={{ f_post.next_page_number }}" class="infinite-more-link">next</a>
+  {% endif %}
+  
+
+<script src="/media/js/jquery.waypoints.min.js"></script>
+<script src="/media/js/infinite.min.js"></script>
+
+<script>
+var infinite = new Waypoint.Infinite({
+  element: $('.infinite-container')[0],
+
+  offset: 'bottom-in-view',
+
+  onBeforePageLoad: function(){
+      
+  },
+
+  onAfterPageLoad: function(){
+
+  }
+
+});
+</script>
+{% endblock content%}

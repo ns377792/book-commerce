@@ -1,0 +1,21 @@
+{% extends  'home/base.html' %}
+<h1></h1>
+{% block content %}
+    <div class="flex flex-wrap p-10 md:ml-14 infinite-container">
+                    {% for posts in catlist.catpost %}
+            <div class="w-full md:w-1/3 xl:w-1/3 xl:m-auto p-6 flex flex-col infinite-item">
+                <a href="{% url 'detailpage' posts.slug %}">
+                    <img class="hover:grow hover:shadow-lg"
+                        src="/media/{{posts.featured_img}}"
+                        width="300px"
+                        height="200px"/>
+                    <div class="pt-3 flex items-center justify-between">
+                        <p class="">{{posts.title}}</p>
+                        
+                    </div>
+                    <p class="pt-1 text-gray-900">Rs. {{posts.price}}</p>
+                </a>
+            </div>
+        {% endfor %}
+        </div>
+    {% endblock content %}

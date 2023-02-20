@@ -1,0 +1,10 @@
+{% extends  'home/base.html' %}
+
+{% block content %}
+<section class="w-3/4 mx-auto px-auto">
+<h2 class="font-medium leading-tight text-4xl mt-0 mb-2 text-blue-600 mt-8">Privacy Policy</h2>
+<p class="font-normal leading-normal mt-14 text-yellow-800">
+    {{pp_text.privacy_text| safe}}
+</p>
+</section>
+    {% endblock content %}
